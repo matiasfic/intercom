@@ -1,5 +1,5 @@
 {
-  "name": "@capacitor-community/intercom",
+  "name": "@matiasfic/intercom",
   "version": "5.0.0",
   "description": "Enable Intercom features for Capacitor apps",
   "main": "dist/plugin.cjs.js",
@@ -28,7 +28,7 @@
     "contributors:add": "all-contributors add",
     "contributors:gen": "all-contributors generate"
   },
-  "author": "Stewan Silva",
+  "author": "Matias Ficarrotti",
   "license": "MIT",
   "peerDependencies": {
     "@capacitor/core": "^5.0.0"
@@ -57,7 +57,7 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "CapacitorCommunityIntercom.podspec"
+    "MatiasficIntercom.podspec"
   ],
   "keywords": [
     "capacitor",
@@ -79,9 +79,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/capacitor-community/intercom"
+    "url": "https://github.com/matiasfic/intercom"
   },
   "bugs": {
-    "url": "https://github.com/capacitor-community/intercom/issues"
+    "url": "https://github.com/matiasfic/intercom/issues"
   }
 }
