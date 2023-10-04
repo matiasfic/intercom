@@ -2,7 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [5.0.0](https://github.com/capacitor-community/intercom/compare/v4.0.2...v5.0.0) (2023-05-18)
+## [5.1.0](https://github.com/capacitor-community/intercom/compare/v4.0.2...v5.0.0) (2023-10-04)
+
+### Features
+
+* **android:** Upgrade SDK to 14.2.0
+
+### Bug Fixes
+
+* **android:** New media permissions for API 33+ (READ_EXTERNAL_STORAGE deprecated)
+
+### [5.0.0](https://github.com/capacitor-community/intercom/compare/v4.0.2...v5.0.0) (2023-05-18)
 
 ### [4.0.2](https://github.com/capacitor-community/intercom/compare/v4.0.1...v4.0.2) (2022-12-14)
 
