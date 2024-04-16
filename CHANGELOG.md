@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.2.0](https://github.com/capacitor-community/intercom/compare/v4.0.2...v5.2.0) (2024-04-16)
+
+### Features
+
+* **android:** Implement push notifications
+
+
 ## [5.1.0](https://github.com/capacitor-community/intercom/compare/v4.0.2...v5.0.0) (2023-10-04)
 
 ### Features
