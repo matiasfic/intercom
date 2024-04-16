@@ -1,11 +1,15 @@
 package com.getcapacitor.community.intercom;
 
+import android.util.Log;
+
+import com.getcapacitor.Bridge;
 import com.getcapacitor.CapConfig;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
+import com.getcapacitor.PluginHandle;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
@@ -26,7 +30,39 @@ import io.intercom.android.sdk.push.IntercomPushClient;
 
 @CapacitorPlugin(name = "Intercom", permissions = @Permission(strings = {}, alias = "receive"))
 public class IntercomPlugin extends Plugin {
+    public static Bridge staticBridge = null;
     private final IntercomPushClient intercomPushClient = new IntercomPushClient();
+
+    public static IntercomPlugin getIntercomPluginInstance() {
+        if (staticBridge != null && staticBridge.getWebView() != null) {
+            PluginHandle handle = staticBridge.getPlugin("Intercom");
+            if (handle == null) {
+                return null;
+            }
+            return (IntercomPlugin) handle.getInstance();
+        }
+        return null;
+    }
+
+    public boolean isIntercomPush(Map<String, String> message) {
+        return message != null && this.intercomPushClient.isIntercomPush(message);
+    }
+
+    public void sendPushToken(String token) {
+        try {
+            intercomPushClient.sendTokenToIntercom(this.getActivity().getApplication(), token);
+        } catch (Exception e) {
+            Log.e("INTERCOM", "Failed to send push token", e);
+        }
+    }
+
+    public void sendPush(Map<String, String> message) {
+        try {
+            intercomPushClient.handlePush(this.getActivity().getApplication(), message);
+        } catch (Exception e) {
+            Log.e("INTERCOM", "Failed to send push", e);
+        }
+    }
 
     @Override
     public void load() {
@@ -240,10 +276,11 @@ public class IntercomPlugin extends Plugin {
 
     private void setUpIntercom() {
         try {
-            // get config
             CapConfig config = this.bridge.getConfig();
             String apiKey = config.getPluginConfiguration("Intercom").getString("androidApiKey");
             String appId = config.getPluginConfiguration("Intercom").getString("androidAppId");
+
+            staticBridge = this.bridge;
 
             // init intercom sdk
             Intercom.initialize(this.getActivity().getApplication(), apiKey, appId);
