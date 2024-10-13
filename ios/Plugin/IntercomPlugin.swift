@@ -200,5 +200,14 @@ public class IntercomPlugin: CAPPlugin {
             call.reject("articleId missing.")
         }
     }
+    
+    @objc func displayCollection(_ call: CAPPluginCall) {
+        if let collectionId = call.getString("collectionId") {
+            Intercom.presentContent(Intercom.Content.helpCenterCollections(ids: [collectionId]))
+            call.resolve()
+        } else {
+            call.reject("collectionId missing.")
+        }
+    }
 }
 

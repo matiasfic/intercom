@@ -270,6 +270,15 @@ public class IntercomPlugin extends Plugin {
     }
 
     @PluginMethod
+    public void displayCollection(PluginCall call) {
+        String collectionId = call.getString("collectionId");
+        if (collectionId != null) {
+            Intercom.client().presentContent(new IntercomContent.HelpCenterCollections(List.of(collectionId)));
+        }
+        call.resolve();
+    }
+
+    @PluginMethod
     public void displayArticle(PluginCall call) {
         String articleId = call.getString("articleId");
         if (articleId != null) {

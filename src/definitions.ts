@@ -26,6 +26,7 @@ export interface IntercomPlugin {
   sendPushTokenToIntercom(options: { value: string }): Promise<void>;
   receivePush(notification: IntercomPushNotificationData): Promise<void>;
   displayArticle(options: { articleId: string; }): Promise<void>;
+  displayCollection(options: { collectionId: string; }): Promise<void>;
 }
 
 export interface IntercomPushNotificationData {
