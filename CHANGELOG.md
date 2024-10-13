@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.1.0](https://github.com/capacitor-community/intercom/compare/v6.0.0...v6.1.0) (2024-10-13)
+
+### Features
+
+* **intercom:** Add new method displayCollection()
+* **intercom:** Replace deprecated methods
+
 ## [6.0.0](https://github.com/capacitor-community/intercom/compare/v5.2.0...v6.0.0) (2024-07-04)
 
 ### Features
