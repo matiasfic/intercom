@@ -29,8 +29,8 @@ public class IntercomPlugin: CAPPlugin {
     }
 
     @objc func loadWithKeys(_ call: CAPPluginCall) {
-        let appId = call.getString("appId")  as? String ?? "NO_APP_ID_PASSED"
-        let apiKey = call.getString("apiKeyIOS") as? String ?? "NO_API_KEY_PASSED"
+        let appId = call.getString("appId") ?? "NO_APP_ID_PASSED"
+        let apiKey = call.getString("apiKeyIOS") ?? "NO_API_KEY_PASSED"
         
         Intercom.setApiKey(apiKey, forAppId: appId)
         
@@ -116,7 +116,7 @@ public class IntercomPlugin: CAPPlugin {
     }
     
     @objc func displayMessenger(_ call: CAPPluginCall) {
-        Intercom.presentMessenger();
+        Intercom.present(Space.home)
         call.resolve()
     }
     
@@ -130,7 +130,7 @@ public class IntercomPlugin: CAPPlugin {
     }
     
     @objc func displayHelpCenter(_ call: CAPPluginCall) {
-        Intercom.presentHelpCenter()
+        Intercom.present(Space.helpCenter)
         call.resolve()
     }
     
@@ -161,7 +161,7 @@ public class IntercomPlugin: CAPPlugin {
     
     @objc func displayCarousel(_ call: CAPPluginCall) {
         if let carouselId = call.getString("carouselId") {
-            Intercom.presentCarousel(carouselId)
+            Intercom.presentContent(Intercom.Content.carousel(id: carouselId))
             call.resolve()
         }else{
             call.reject("carouselId not provided to displayCarousel.")
@@ -181,7 +181,6 @@ public class IntercomPlugin: CAPPlugin {
     }
     
     @objc func setBottomPadding(_ call: CAPPluginCall) {
-        
         if let value = call.getString("value"),
            let number = NumberFormatter().number(from: value) {
             
@@ -195,10 +194,10 @@ public class IntercomPlugin: CAPPlugin {
     
     @objc func displayArticle(_ call: CAPPluginCall) {
         if let articleId = call.getString("articleId") {
-            Intercom.presentArticle(articleId)
+            Intercom.presentContent(Intercom.Content.article(id: articleId))
             call.resolve()
         } else {
-            call.reject("articleId not provided to presentArticle.")
+            call.reject("articleId missing.")
         }
     }
 }

@@ -14,8 +14,6 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,7 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import io.intercom.android.sdk.Intercom;
-import io.intercom.android.sdk.IntercomPushManager;
+import io.intercom.android.sdk.IntercomContent;
+import io.intercom.android.sdk.IntercomSpace;
 import io.intercom.android.sdk.UserAttributes;
 import io.intercom.android.sdk.identity.Registration;
 import io.intercom.android.sdk.push.IntercomPushClient;
@@ -171,7 +170,7 @@ public class IntercomPlugin extends Plugin {
 
     @PluginMethod
     public void displayMessenger(PluginCall call) {
-        Intercom.client().displayMessenger();
+        Intercom.client().present(IntercomSpace.Home);
         call.resolve();
     }
 
@@ -184,7 +183,7 @@ public class IntercomPlugin extends Plugin {
 
     @PluginMethod
     public void displayHelpCenter(PluginCall call) {
-        Intercom.client().displayHelpCenter();
+        Intercom.client().present(IntercomSpace.HelpCenter);
         call.resolve();
     }
 
@@ -228,15 +227,18 @@ public class IntercomPlugin extends Plugin {
     @PluginMethod
     public void setUserHash(PluginCall call) {
         String hmac = call.getString("hmac");
-        Intercom.client().setUserHash(hmac);
+        if (hmac != null) {
+            Intercom.client().setUserHash(hmac);
+        }
         call.resolve();
     }
 
     @PluginMethod
     public void setBottomPadding(PluginCall call) {
-        String stringValue = call.getString("value");
-        int value = Integer.parseInt(stringValue);
-        Intercom.client().setBottomPadding(value);
+        String value = call.getString("value");
+        if (value != null) {
+            Intercom.client().setBottomPadding(Integer.parseInt(value));
+        }
         call.resolve();
     }
 
@@ -270,7 +272,9 @@ public class IntercomPlugin extends Plugin {
     @PluginMethod
     public void displayArticle(PluginCall call) {
         String articleId = call.getString("articleId");
-        Intercom.client().displayArticle(articleId);
+        if (articleId != null) {
+            Intercom.client().presentContent(new IntercomContent.Article(articleId));
+        }
         call.resolve();
     }
 
