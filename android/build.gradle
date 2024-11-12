@@ -3,7 +3,7 @@ ext {
     androidxAppCompatVersion = project.hasProperty('androidxAppCompatVersion') ? rootProject.ext.androidxAppCompatVersion : '1.6.1'
     androidxJunitVersion = project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.1.5'
     androidxEspressoCoreVersion = project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.5.1'
-    intercomSdkVersion = project.hasProperty('intercomSdkVersion') ? rootProject.ext.intercomSdkVersion : '15.11.1'
+    firebaseMessagingVersion = project.hasProperty('firebaseMessagingVersion') ? rootProject.ext.firebaseMessagingVersion : '23.3.1'
 }
 
 buildscript {
@@ -56,6 +56,12 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
-    implementation "io.intercom.android:intercom-sdk:$intercomSdkVersion"
-    implementation 'com.google.firebase:firebase-messaging:20.2.+'
+
+    // Required for updating to SDK 15
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    implementation("io.intercom.android:intercom-sdk:15.0.0") {
+        exclude group: "androidx.lifecycle"
+    }
+    implementation "com.google.firebase:firebase-messaging:$firebaseMessagingVersion"
 }
