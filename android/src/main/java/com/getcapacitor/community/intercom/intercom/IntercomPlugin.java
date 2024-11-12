@@ -103,10 +103,10 @@ public class IntercomPlugin extends Plugin {
 
         Registration registration = new Registration();
 
-        if (email != null && email.length() > 0) {
+        if (email != null && !email.isEmpty()) {
             registration = registration.withEmail(email);
         }
-        if (userId != null && userId.length() > 0) {
+        if (userId != null && !userId.isEmpty()) {
             registration = registration.withUserId(userId);
         }
         Intercom.client().registerIdentifiedUser(registration);
@@ -123,23 +123,23 @@ public class IntercomPlugin extends Plugin {
     public void updateUser(PluginCall call) {
         UserAttributes.Builder builder = new UserAttributes.Builder();
         String userId = call.getString("userId");
-        if (userId != null && userId.length() > 0) {
+        if (userId != null && !userId.isEmpty()) {
             builder.withUserId(userId);
         }
         String email = call.getString("email");
-        if (email != null && email.length() > 0) {
+        if (email != null && !email.isEmpty()) {
             builder.withEmail(email);
         }
         String name = call.getString("name");
-        if (name != null && name.length() > 0) {
+        if (name != null && !name.isEmpty()) {
             builder.withName(name);
         }
         String phone = call.getString("phone");
-        if (phone != null && phone.length() > 0) {
+        if (phone != null && !phone.isEmpty()) {
             builder.withPhone(phone);
         }
         String languageOverride = call.getString("languageOverride");
-        if (languageOverride != null && languageOverride.length() > 0) {
+        if (languageOverride != null && !languageOverride.isEmpty()) {
             builder.withLanguageOverride(languageOverride);
         }
         Map<String, Object> customAttributes = mapFromJSON(call.getObject("customAttributes"));
@@ -159,10 +159,12 @@ public class IntercomPlugin extends Plugin {
         String eventName = call.getString("name");
         Map<String, Object> metaData = mapFromJSON(call.getObject("data"));
 
-        if (metaData == null) {
-            Intercom.client().logEvent(eventName);
-        } else {
-            Intercom.client().logEvent(eventName, metaData);
+        if (eventName != null) {
+            if (metaData == null) {
+                Intercom.client().logEvent(eventName);
+            } else {
+                Intercom.client().logEvent(eventName, metaData);
+            }
         }
 
         call.resolve();
@@ -245,12 +247,15 @@ public class IntercomPlugin extends Plugin {
     @PluginMethod
     public void sendPushTokenToIntercom(PluginCall call) {
         String token = call.getString("value");
-        try {
-            intercomPushClient.sendTokenToIntercom(this.getActivity().getApplication(), token);
-            call.resolve();
-        } catch (Exception e) {
-            call.reject("Failed to send push token to Intercom", e);
+        if (token != null) {
+            try {
+                intercomPushClient.sendTokenToIntercom(this.getActivity().getApplication(), token);
+                call.resolve();
+            } catch (Exception e) {
+                call.reject("Failed to send push token to Intercom", e);
+            }
         }
+        call.resolve();
     }
 
     @PluginMethod
