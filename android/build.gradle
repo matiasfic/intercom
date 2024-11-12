@@ -60,7 +60,7 @@ dependencies {
     // Required for updating to SDK 15
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
-    implementation("io.intercom.android:intercom-sdk:15.0.0") {
+    implementation("io.intercom.android:intercom-sdk:15.11.1") {
         exclude group: "androidx.lifecycle"
     }
     implementation "com.google.firebase:firebase-messaging:$firebaseMessagingVersion"
